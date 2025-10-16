@@ -1,0 +1,504 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Student Database Management System</title>
+   <style>
+       * {
+           margin: 0;
+           padding: 0;
+           box-sizing: border-box;
+       }
+
+
+       body {
+           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+           background-color: #F8F9FA;
+           color: #343A40;
+           line-height: 1.6;
+           padding: 20px;
+       }
+
+
+       .container {
+           max-width: 1200px;
+           margin: 0 auto;
+       }
+
+
+       /* Header */
+       .header {
+           text-align: center;
+           padding: 40px 20px;
+           background-color: #003366;
+           color: white;
+           border-radius: 12px;
+           margin-bottom: 30px;
+           box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+       }
+
+
+       .header h1 {
+           font-size: 2.5rem;
+           margin-bottom: 10px;
+           font-weight: 600;
+       }
+
+
+       .subtitle {
+           font-size: 1.1rem;
+           opacity: 0.9;
+       }
+
+
+       /* Form Section */
+       .form-section {
+           background-color: white;
+           padding: 30px;
+           border-radius: 12px;
+           margin-bottom: 30px;
+           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+       }
+
+
+       .form-section h2 {
+           color: #003366;
+           margin-bottom: 20px;
+           font-size: 1.5rem;
+       }
+
+
+       .student-form {
+           display: grid;
+           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+           gap: 20px;
+           align-items: end;
+       }
+
+
+       .form-group {
+           display: flex;
+           flex-direction: column;
+       }
+
+
+       .form-group label {
+           margin-bottom: 8px;
+           font-weight: 500;
+           color: #003366;
+           font-size: 0.95rem;
+       }
+
+
+       .form-group input {
+           padding: 12px 15px;
+           border: 2px solid #E9ECEF;
+           border-radius: 8px;
+           font-size: 1rem;
+           transition: border-color 0.3s;
+       }
+
+
+       .form-group input:focus {
+           outline: none;
+           border-color: #003366;
+       }
+
+
+       .btn-add {
+           padding: 12px 30px;
+           background-color: #28a745;
+           color: white;
+           border: none;
+           border-radius: 8px;
+           font-size: 1rem;
+           font-weight: 600;
+           cursor: pointer;
+           transition: background-color 0.3s, transform 0.1s;
+       }
+
+
+       .btn-add:hover {
+           background-color: #218838;
+           transform: translateY(-2px);
+       }
+
+
+       .btn-add:active {
+           transform: translateY(0);
+       }
+
+
+       /* Search Section */
+       .search-section {
+           background-color: white;
+           padding: 25px 30px;
+           border-radius: 12px;
+           margin-bottom: 30px;
+           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+       }
+
+
+       .search-section h2 {
+           color: #003366;
+           margin-bottom: 15px;
+           font-size: 1.5rem;
+       }
+
+
+       .search-box input {
+           width: 100%;
+           padding: 12px 15px;
+           border: 2px solid #E9ECEF;
+           border-radius: 8px;
+           font-size: 1rem;
+           transition: border-color 0.3s;
+       }
+
+
+       .search-box input:focus {
+           outline: none;
+           border-color: #003366;
+       }
+
+
+       /* Table Section */
+       .table-section {
+           background-color: white;
+           padding: 30px;
+           border-radius: 12px;
+           box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+       }
+
+
+       .table-container {
+           overflow-x: auto;
+       }
+
+
+       table {
+           width: 100%;
+           border-collapse: collapse;
+       }
+
+
+       thead {
+           background-color: #003366;
+           color: white;
+       }
+
+
+       th {
+           padding: 15px;
+           text-align: left;
+           font-weight: 600;
+           font-size: 0.95rem;
+           text-transform: uppercase;
+           letter-spacing: 0.5px;
+       }
+
+
+       tbody tr {
+           border-bottom: 1px solid #E9ECEF;
+           transition: background-color 0.2s;
+       }
+
+
+       tbody tr:hover {
+           background-color: #F8F9FA;
+       }
+
+
+       td {
+           padding: 15px;
+           font-size: 0.95rem;
+       }
+
+
+       .btn-delete {
+           padding: 8px 16px;
+           background-color: #dc3545;
+           color: white;
+           border: none;
+           border-radius: 6px;
+           font-size: 0.9rem;
+           cursor: pointer;
+           transition: background-color 0.3s;
+       }
+
+
+       .btn-delete:hover {
+           background-color: #c82333;
+       }
+
+
+       .empty-state {
+           text-align: center;
+           padding: 60px 20px;
+           color: #6c757d;
+           display: none;
+       }
+
+
+       .empty-state p {
+           font-size: 1.1rem;
+       }
+
+
+       /* Responsive Design */
+       @media (max-width: 768px) {
+           .header h1 {
+               font-size: 1.8rem;
+           }
+
+
+           .subtitle {
+               font-size: 1rem;
+           }
+
+
+           .student-form {
+               grid-template-columns: 1fr;
+           }
+
+
+           .form-section,
+           .search-section,
+           .table-section {
+               padding: 20px;
+           }
+
+
+           table {
+               font-size: 0.9rem;
+           }
+
+
+           th, td {
+               padding: 10px;
+           }
+
+
+           th:last-child,
+           td:last-child {
+               text-align: center;
+           }
+       }
+
+
+       @media (max-width: 480px) {
+           body {
+               padding: 10px;
+           }
+
+
+           .header {
+               padding: 30px 15px;
+           }
+
+
+           .header h1 {
+               font-size: 1.5rem;
+           }
+       }
+   </style>
+</head>
+<body>
+   <div class="container">
+       <!-- Header -->
+       <header class="header">
+           <h1>Student Database Management System</h1>
+           <p class="subtitle">Manage your student records efficiently</p>
+       </header>
+
+
+       <!-- Add Student Form -->
+       <section class="form-section">
+           <h2>Add New Student</h2>
+           <form id="studentForm" class="student-form">
+               <div class="form-group">
+                   <label for="studentName">Student Name</label>
+                   <input
+                       type="text"
+                       id="studentName"
+                       placeholder="Enter student name"
+                       required
+                   >
+               </div>
+               <div class="form-group">
+                   <label for="rollNo">Roll Number</label>
+                   <input
+                       type="text"
+                       id="rollNo"
+                       placeholder="Enter roll number"
+                       required
+                   >
+               </div>
+               <div class="form-group">
+                   <label for="major">Major</label>
+                   <input
+                       type="text"
+                       id="major"
+                       placeholder="Enter major/department"
+                       required
+                   >
+               </div>
+               <button type="submit" class="btn-add">Add Student</button>
+           </form>
+       </section>
+
+
+       <!-- Search Section -->
+       <section class="search-section">
+           <h2>Student Records</h2>
+           <div class="search-box">
+               <input
+                   type="text"
+                   id="searchInput"
+                   placeholder="Search by name or roll number..."
+               >
+           </div>
+       </section>
+
+
+       <!-- Students Table -->
+       <section class="table-section">
+           <div class="table-container">
+               <table id="studentTable">
+                   <thead>
+                       <tr>
+                           <th>Name</th>
+                           <th>Roll Number</th>
+                           <th>Major</th>
+                           <th>Action</th>
+                       </tr>
+                   </thead>
+                   <tbody id="studentTableBody">
+                       <!-- Students will be dynamically added here -->
+                   </tbody>
+               </table>
+               <div id="emptyState" class="empty-state">
+                   <p>No students found. Add your first student above!</p>
+               </div>
+           </div>
+       </section>
+   </div>
+
+
+   <script>
+       // Storage array for students
+       let students = [];
+       let studentIdCounter = 1;
+
+
+       // DOM Elements
+       const studentForm = document.getElementById('studentForm');
+       const studentNameInput = document.getElementById('studentName');
+       const rollNoInput = document.getElementById('rollNo');
+       const majorInput = document.getElementById('major');
+       const searchInput = document.getElementById('searchInput');
+       const studentTableBody = document.getElementById('studentTableBody');
+       const emptyState = document.getElementById('emptyState');
+
+
+       // Event Listeners
+       studentForm.addEventListener('submit', addStudent);
+       searchInput.addEventListener('input', filterStudents);
+
+
+       // Add Student Function
+       function addStudent(e) {
+           e.preventDefault();
+
+
+           const name = studentNameInput.value.trim();
+           const rollNo = rollNoInput.value.trim();
+           const major = majorInput.value.trim();
+
+
+           if (name && rollNo && major) {
+               const student = {
+                   id: studentIdCounter++,
+                   name: name,
+                   rollNo: rollNo,
+                   major: major
+               };
+
+
+               students.push(student);
+               studentForm.reset();
+               displayStudents(students);
+           }
+       }
+
+
+       // Display Students Function
+       function displayStudents(studentList) {
+           studentTableBody.innerHTML = '';
+
+
+           if (studentList.length === 0) {
+               emptyState.style.display = 'block';
+               return;
+           }
+
+
+           emptyState.style.display = 'none';
+
+
+           studentList.forEach(student => {
+               const row = document.createElement('tr');
+               row.innerHTML = `
+                   <td>${student.name}</td>
+                   <td>${student.rollNo}</td>
+                   <td>${student.major}</td>
+                   <td>
+                       <button class="btn-delete" onclick="deleteStudent(${student.id})">Delete</button>
+                   </td>
+               `;
+               studentTableBody.appendChild(row);
+           });
+       }
+
+
+       // Delete Student Function
+       function deleteStudent(id) {
+           students = students.filter(student => student.id !== id);
+          
+           // If search is active, filter again
+           const searchTerm = searchInput.value.trim().toLowerCase();
+           if (searchTerm) {
+               filterStudents();
+           } else {
+               displayStudents(students);
+           }
+       }
+
+
+       // Filter Students Function
+       function filterStudents() {
+           const searchTerm = searchInput.value.trim().toLowerCase();
+
+
+           if (searchTerm === '') {
+               displayStudents(students);
+               return;
+           }
+
+
+           const filteredStudents = students.filter(student => {
+               return student.name.toLowerCase().includes(searchTerm) ||
+                      student.rollNo.toLowerCase().includes(searchTerm);
+           });
+
+
+           displayStudents(filteredStudents);
+       }
+
+
+       // Initialize empty state on page load
+       displayStudents(students);
+   </script>
+</body>
+</html>
