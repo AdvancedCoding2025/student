@@ -43,6 +43,15 @@ StudentDatabase/
 ├── student.html      # Contains all HTML, CSS, and JavaScript for the app
 └── README.md         # Project documentation
 ```
+## Screenshots
+1. Home Page – student records and the grid
+![home](ss/home.png)
+
+2. Adding a Patient – Entering student details in the Add/Update form
+![home](ss/add.png)
+
+3. Search Functionality – Searching student by name
+![home](ss/search.png)
 
 ## Future Improvements
 - Persistent storage using localStorage to save data between sessions.
